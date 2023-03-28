@@ -23,8 +23,55 @@
     </a>
   </div>
     
-        <button>Add Card</button>
-        <button>Remove Card</button>
-        
-    </body>
+        <button id="add-card-btn">Add Card</button>
+        <button id="remove-card-btn" disabled>Remove Card</button>
+          
+  <!-- THE JAVASCRIPT PORTION -->
+  <script>
+  // Defines the card container and buttons
+  const cardContainer = document.getElementById("card-container");
+  const addCardBtn = document.getElementById("add-card-btn");
+  const removeCardBtn = document.getElementById("remove-card-btn");
+  
+  // Adds an event listener to the Add Card button. Starts out by defining the first card in the container.
+  // If there is no such card on click, it adds one. If there is, it clones that card. Also enables the Remove Card button.
+  addCardBtn.addEventListener("click", () => {  
+  const firstCard = cardContainer.querySelector(".card");
+  
+  if (!firstCard) {
+    const newCard = document.createElement("a");
+    newCard.className = "card";
+    newCard.href = "https://www.axis.com/";
+    newCard.innerHTML = `
+      <div class="card__image">
+        <img src="https://picsum.photos/300/300" alt="Card Image">
+      </div>
+      <div class="card__content">
+        <h2 class="card__title">Card Title</h2>
+        <p class="card__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
+      </div>
+    `;
+    cardContainer.appendChild(newCard);
+    } else {
+    const newCard = firstCard.cloneNode(true);
+    cardContainer.appendChild(newCard);
+    }
+    removeCardBtn.disabled = false;
+    });
+  
+  // Adds an event listener to the Remove Card button. Starts out by defining the last card in the container, then removes it.
+  // The button is disabled if there are no more cards.
+  removeCardBtn.addEventListener("click", () => {
+    const lastCard = cardContainer.lastElementChild;
+  
+    cardContainer.removeChild(lastCard);
+    if (cardContainer.childElementCount > 0) {
+    removeCardBtn.disabled = false;
+    } else {
+    removeCardBtn.disabled = true;
+    }
+      });
+  </script>
+  
+</body>
 </html>
